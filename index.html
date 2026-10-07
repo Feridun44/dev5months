@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEV5MONTHS | 5 Ayda Senior Seviye Fullstack Yol Haritası</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              purple: '#8b5cf6',
+              dark: '#090d16',
+              darker: '#05070c',
+              card: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen">
+
+  <!-- Top Navigation & Focus Header -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-4 lg:px-8 py-3">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-emerald-400 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-slate-950 font-bold">
+          <i data-lucide="terminal" class="w-6 h-6 stroke-[2.5]"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">DEV5MONTHS</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-mono font-semibold">ELITE EDITION</span>
+          </div>
+          <p class="text-xs text-slate-400">Zero to Senior-Mindset Fullstack Accelerator</p>
+        </div>
+      </div>
+
+      <!-- Pomodoro Focus Timer -->
+      <div class="flex items-center gap-3 bg-slate-900/80 px-4 py-2 rounded-xl border border-white/5">
+        <div class="flex items-center gap-2">
+          <i data-lucide="timer" class="w-4 h-4 text-cyan-400"></i>
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider" id="timer-mode">Odak</span>
+          <span class="font-mono font-bold text-lg text-cyan-300 w-16 text-center" id="timer-display">25:00</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <button id="timer-toggle-btn" class="p-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 transition-colors" title="Başlat / Duraklat">
+            <i data-lucide="play" class="w-4 h-4" id="timer-icon"></i>
+          </button>
+          <button id="timer-reset-btn" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition-colors" title="Sıfırla">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2">
+        <a href="english.html" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold flex items-center gap-2 transition-all shadow-lg shadow-emerald-500/10" title="1 Aylık Yazılımcı İngilizcesi ve Fiilimsiler Kampını Aç">
+          <i data-lucide="languages" class="w-4 h-4 text-emerald-400"></i>
+          <span>🇬🇧 1 Aylık İngilizce Kampı</span>
+        </a>
+        <button id="export-btn" class="px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-300 flex items-center gap-1.5 border border-white/5 transition-all">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          Yedeği İndir
+        </button>
+        <button id="reset-all-btn" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-medium flex items-center gap-1.5 transition-all">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+          Sıfırla
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 space-y-8">
+    
+    <!-- Hero / Stats Dashboard -->
+    <section class="glass-panel rounded-2xl p-6 lg:p-8 relative overflow-hidden border border-white/10">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 space-y-6">
+        
+        <!-- Header & Target Goal -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-2xl lg:text-3xl font-extrabold tracking-tight">
+              5 Ayda <span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">2 Senelik Yazılımcıyı Sollayan</span> Seviyeye Ulaş
+            </h1>
+            <p class="text-sm text-slate-400 mt-1 max-w-2xl">
+              Ezber yok, boş video izlemek yok. Her gün somut mühendislik görevleri, senior zihniyet kalıpları ve mülakat sorularıyla kariyerini baştan inşa ediyoruz.
+            </p>
+          </div>
+          <div class="flex items-center gap-3 bg-slate-900/90 border border-cyan-500/30 px-4 py-3 rounded-xl">
+            <div class="text-right">
+              <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">Geliştirici Rütben</div>
+              <div class="text-sm font-bold text-cyan-400" id="user-rank">Level 1: Junior Slayer Adayı</div>
+            </div>
+            <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+              <i data-lucide="award" class="w-5 h-5"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Metrics Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          
+          <div class="glass-card rounded-xl p-4 border border-white/5">
+            <div class="flex items-center justify-between text-slate-400 mb-2">
+              <span class="text-xs font-medium">Genel İlerleme</span>
+              <i data-lucide="percent" class="w-4 h-4 text-cyan-400"></i>
+            </div>
+            <div class="text-2xl font-bold font-mono text-cyan-300" id="stat-percent">0%</div>
+            <div class="text-[11px] text-slate-400 mt-1">150 günün hedefi</div>
+          </div>
+
+          <div class="glass-card rounded-xl p-4 border border-white/5">
+            <div class="flex items-center justify-between text-slate-400 mb-2">
+              <span class="text-xs font-medium">Biten Günler</span>
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+            </div>
+            <div class="text-2xl font-bold font-mono text-emerald-300" id="stat-completed-days">0 / 150</div>
+            <div class="text-[11px] text-slate-400 mt-1" id="stat-remaining-days">150 gün kaldı</div>
+          </div>
+
+          <div class="glass-card rounded-xl p-4 border border-white/5">
+            <div class="flex items-center justify-between text-slate-400 mb-2">
+              <span class="text-xs font-medium">Toplam XP</span>
+              <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
+            </div>
+            <div class="text-2xl font-bold font-mono text-amber-300" id="stat-xp">0 XP</div>
+            <div class="text-[11px] text-slate-400 mt-1">Her görev puan kazandırır</div>
+          </div>
+
+          <div class="glass-card rounded-xl p-4 border border-white/5">
+            <div class="flex items-center justify-between text-slate-400 mb-2">
+              <span class="text-xs font-medium">Çalışma Serisi</span>
+              <i data-lucide="flame" class="w-4 h-4 text-rose-400"></i>
+            </div>
+            <div class="text-2xl font-bold font-mono text-rose-300" id="stat-streak">0 Gün</div>
+            <div class="text-[11px] text-slate-400 mt-1">İstikrar başarıyı getirir</div>
+          </div>
+
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-1.5">
+          <div class="flex justify-between text-xs text-slate-400">
+            <span>5 Aylık İlerleme Çubuğu</span>
+            <span id="bar-percent-text" class="font-mono text-cyan-400">0%</span>
+          </div>
+          <div class="w-full h-3 rounded-full bg-slate-900 border border-white/5 overflow-hidden">
+            <div id="main-progress-bar" class="h-full bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 transition-all duration-500 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <div class="flex flex-wrap gap-2 border-b border-white/10 pb-3">
+      <button class="tab-btn active px-4 py-2.5 rounded-xl font-semibold text-sm flex items-center gap-2 border border-transparent transition-all" data-tab="roadmap">
+        <i data-lucide="calendar" class="w-4 h-4"></i>
+        150 Günlük Yol Haritası
+      </button>
+      <button class="tab-btn px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center gap-2 border border-transparent transition-all" data-tab="secrets">
+        <i data-lucide="brain" class="w-4 h-4"></i>
+        2 Senelikleri Sollayan Zihniyet
+      </button>
+      <button class="tab-btn px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center gap-2 border border-transparent transition-all" data-tab="flashcards">
+        <i data-lucide="layers" class="w-4 h-4"></i>
+        Mülakat Flashcard Modu
+      </button>
+      <button class="tab-btn px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center gap-2 border border-transparent transition-all" data-tab="cheatsheet">
+        <i data-lucide="code-2" class="w-4 h-4"></i>
+        Kod & Mimari Şablonları
+      </button>
+    </div>
+
+    <!-- TAB 1: ROADMAP CONTENT -->
+    <div id="tab-content-roadmap" class="space-y-6">
+      
+      <!-- Filters and Search Toolbar -->
+      <div class="glass-panel rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        
+        <!-- Month Filter Pills -->
+        <div class="flex flex-wrap items-center gap-1.5 w-full md:w-auto" id="month-filters">
+          <button class="month-pill active px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 transition-all" data-month="all">
+            Tüm Aylar (1-5)
+          </button>
+          <button class="month-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 border border-transparent transition-all" data-month="1">
+            1. Ay (JS Core)
+          </button>
+          <button class="month-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 border border-transparent transition-all" data-month="2">
+            2. Ay (React/TS)
+          </button>
+          <button class="month-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 border border-transparent transition-all" data-month="3">
+            3. Ay (Next.js)
+          </button>
+          <button class="month-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 border border-transparent transition-all" data-month="4">
+            4. Ay (Backend/DB)
+          </button>
+          <button class="month-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 border border-transparent transition-all" data-month="5">
+            5. Ay (Mülakat/SaaS)
+          </button>
+        </div>
+
+        <!-- Search & Status Filter -->
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <select id="status-filter" class="bg-slate-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-500">
+            <option value="all">Tüm Durumlar</option>
+            <option value="uncompleted">Yapılacaklar</option>
+            <option value="completed">Tamamlananlar</option>
+          </select>
+
+          <div class="relative flex-1 md:w-64">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+            <input type="text" id="search-input" placeholder="Konu, hook, SQL ara..." class="w-full bg-slate-900 border border-white/10 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-cyan-500">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Roadmap Days Grid -->
+      <div id="roadmap-days-container" class="space-y-4">
+        <!-- Rendered by JS -->
+      </div>
+
+    </div>
+
+    <!-- TAB 2: SENIOR SECRETS CONTENT -->
+    <div id="tab-content-secrets" class="hidden space-y-6">
+      <div class="glass-panel rounded-2xl p-6 lg:p-8 space-y-4 border border-cyan-500/20">
+        <div class="flex items-center gap-3">
+          <div class="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30">
+            <i data-lucide="crown" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Neden Çoğu Yazılımcı 2 Yılda Yerinde Sayar?</h2>
+            <p class="text-sm text-slate-400">Piyasadaki junior ve orta seviye geliştiricilerin %70'i sadece hazır şablonları kopyalar. Seni farklı kılacak zihinsel modeller:</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="secrets-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- TAB 3: INTERVIEW FLASHCARDS CONTENT -->
+    <div id="tab-content-flashcards" class="hidden space-y-6">
+      <div class="glass-panel rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border border-white/10">
+        <div>
+          <h2 class="text-xl font-bold text-white">Teknik Mülakat Kartları</h2>
+          <p class="text-sm text-slate-400">Karta tıkla, cevabı ters çevir ve sesli olarak kendi cümlelerinle tekrar et.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-slate-400">Toplam 8 Temel Konu</span>
+        </div>
+      </div>
+
+      <div id="flashcards-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- TAB 4: CHEATSHEETS CONTENT -->
+    <div id="tab-content-cheatsheet" class="hidden space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="cheatsheet-container">
+        
+        <!-- Cheat Card 1: JS Array Methods -->
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base text-cyan-400 flex items-center gap-2">
+              <i data-lucide="code" class="w-4 h-4"></i>
+              Hayat Kurtaran Dizi Metotları (React & Clean JS)
+            </h3>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300">ES6+</span>
+          </div>
+          <pre class="bg-slate-950 p-4 rounded-xl text-xs font-mono text-slate-300 overflow-x-auto border border-white/5 leading-relaxed">
+<span class="text-slate-500">// 1. Filtrele ve Dönüştür</span>
+const activeUsers = users
+  .filter(u => u.isActive)
+  .map(u => ({ id: u.id, fullName: `${u.name} ${u.surname}` }));
+
+<span class="text-slate-500">// 2. Toplam Sepet Tutarı (reduce)</span>
+const total = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+<span class="text-slate-500">// 3. Kategoriye göre gruplama</span>
+const grouped = items.reduce((acc, obj) => {
+  const key = obj.category;
+  if (!acc[key]) acc[key] = [];
+  acc[key].push(obj);
+  return acc;
+}, {});
+
+<span class="text-slate-500">// 4. Hızlı Arama & Kontrol</span>
+const found = users.find(u => u.email === target);
+const hasAdmin = users.some(u => u.role === 'ADMIN');</pre>
+        </div>
+
+        <!-- Cheat Card 2: Git Pro Workflow -->
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base text-emerald-400 flex items-center gap-2">
+              <i data-lucide="git-branch" class="w-4 h-4"></i>
+              Senior Seviye Git İş Akışı
+            </h3>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300">CLI</span>
+          </div>
+          <pre class="bg-slate-950 p-4 rounded-xl text-xs font-mono text-slate-300 overflow-x-auto border border-white/5 leading-relaxed">
+<span class="text-slate-500"># Temiz dal açma</span>
+git checkout -b feature/auth-jwt-refresh
+
+<span class="text-slate-500"># Conventional Commit Standardı</span>
+git commit -m "feat(auth): implement refresh token rotation"
+git commit -m "fix(payment): prevent duplicate charges with idempotency"
+git commit -m "refactor(user): split giant component into custom hooks"
+
+<span class="text-slate-500"># Dağınık commitleri birleştirme (Squash)</span>
+git rebase -i HEAD~3
+
+<span class="text-slate-500"># Değişiklikleri geçici rafa kaldırma</span>
+git stash push -m "WIP: cart checkout logic"
+git stash pop</pre>
+        </div>
+
+        <!-- Cheat Card 3: Modern React / Custom Hook Template -->
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base text-indigo-400 flex items-center gap-2">
+              <i data-lucide="component" class="w-4 h-4"></i>
+              Tip Güvenli Custom Hook Şablonu
+            </h3>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300">TypeScript</span>
+          </div>
+          <pre class="bg-slate-950 p-4 rounded-xl text-xs font-mono text-slate-300 overflow-x-auto border border-white/5 leading-relaxed">
+import { useState, useEffect } from 'react';
+
+export function useLocalStorage&lt;T&gt;(key: string, initialValue: T) {
+  const [value, setValue] = useState&lt;T&gt;(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch {
+      return initialValue;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      console.error("Storage error:", e);
+    }
+  }, [key, value]);
+
+  return [value, setValue] as const;
+}</pre>
+        </div>
+
+        <!-- Cheat Card 4: HTTP Status Codes & REST -->
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base text-amber-400 flex items-center gap-2">
+              <i data-lucide="server" class="w-4 h-4"></i>
+              HTTP Durum Kodları (Mülakatta Kesin Sorulur)
+            </h3>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300">REST API</span>
+          </div>
+          <div class="text-xs space-y-2 text-slate-300 font-mono">
+            <div class="p-2 rounded bg-slate-950/80 border border-white/5 flex justify-between">
+              <span class="text-emerald-400 font-bold">200 OK / 201 Created</span>
+              <span class="text-slate-400">Başarılı / Yeni Kayıt Oluştu</span>
+            </div>
+            <div class="p-2 rounded bg-slate-950/80 border border-white/5 flex justify-between">
+              <span class="text-cyan-400 font-bold">204 No Content</span>
+              <span class="text-slate-400">Başarılı ama gövdede veri yok (örn. DELETE)</span>
+            </div>
+            <div class="p-2 rounded bg-slate-950/80 border border-white/5 flex justify-between">
+              <span class="text-amber-400 font-bold">400 Bad Request</span>
+              <span class="text-slate-400">İstemci hatalı veri gönderdi (Validasyon hatası)</span>
+            </div>
+            <div class="p-2 rounded bg-slate-950/80 border border-white/5 flex justify-between">
+              <span class="text-rose-400 font-bold">401 vs 403</span>
+              <span class="text-slate-400">401: Kimliksiz (Login olmamış) | 403: Yetkisiz (Forbidden)</span>
+            </div>
+            <div class="p-2 rounded bg-slate-950/80 border border-white/5 flex justify-between">
+              <span class="text-purple-400 font-bold">409 Conflict</span>
+              <span class="text-slate-400">Veri çakışması (örn. E-posta zaten kayıtlı)</span>
+            </div>
+            <div class="p-2 rounded bg-slate-950/80 border border-white/5 flex justify-between">
+              <span class="text-red-500 font-bold">500 Internal Server</span>
+              <span class="text-slate-400">Sunucuda beklenmeyen çökme (Backend bug'ı)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Note Modal -->
+  <div id="notes-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-xl rounded-2xl p-6 border border-white/10 space-y-4">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3">
+        <h3 class="font-bold text-lg text-white flex items-center gap-2">
+          <i data-lucide="edit-3" class="w-5 h-5 text-cyan-400"></i>
+          <span id="modal-day-title">Günlük Notlarım</span>
+        </h3>
+        <button id="close-modal-btn" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 mb-1.5">Bugün Ne Öğrendin? Ne Not Almak İstersin?</label>
+        <textarea id="modal-notes-textarea" rows="6" placeholder="Örn: Closure mantığını anladım, useState'in arkasındaki mantığı çözdüm..." class="w-full bg-slate-950 border border-white/10 rounded-xl p-3 text-sm text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500 font-sans"></textarea>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button id="save-note-btn" class="px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm flex items-center gap-2 transition-all shadow-lg shadow-cyan-500/20">
+          <i data-lucide="save" class="w-4 h-4"></i>
+          Notu Kaydet
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

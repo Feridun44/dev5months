@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEV5MONTHS | 1 Aylık Hızlandırılmış Yazılımcı İngilizcesi Kampı</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              purple: '#8b5cf6',
+              dark: '#090d16',
+              card: '#0f172a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen">
+
+  <!-- Top Navigation -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-4 lg:px-8 py-3">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Left: Back Button & Title -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors flex items-center gap-1.5 text-xs font-semibold" title="Yazılım Yol Haritasına Dön">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span>Yazılım Haritasına Dön</span>
+        </a>
+        <div class="h-6 w-px bg-white/10 hidden sm:block"></div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-base lg:text-lg tracking-tight bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+              DEV-ENGLISH 30
+            </span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-mono font-semibold">1 AYDA AKICILIK</span>
+          </div>
+          <p class="text-xs text-slate-400">Yazılımcılar İçin Fiiller, Fiilimsiler & Mülakat İngilizcesi</p>
+        </div>
+      </div>
+
+      <!-- Right: Voice Pronunciation Indicator & Reset -->
+      <div class="flex items-center gap-2.5">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/80 border border-white/5 text-xs text-slate-400">
+          <i data-lucide="volume-2" class="w-4 h-4 text-emerald-400 animate-pulse"></i>
+          <span>Sesli Telaffuz: <strong class="text-emerald-300">Aktif</strong></span>
+        </div>
+        <button id="eng-export-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 flex items-center gap-1.5 border border-white/5 transition-all">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          Yedekle
+        </button>
+        <button id="eng-reset-btn" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-medium flex items-center gap-1.5 transition-all">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+          Sıfırla
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 space-y-8">
+
+    <!-- Hero / Progress Section -->
+    <section class="glass-panel rounded-2xl p-6 lg:p-8 relative overflow-hidden border border-emerald-500/20">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 space-y-6">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-2xl lg:text-3xl font-extrabold tracking-tight">
+              1 Ayda <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">Yazılımcı İngilizcesini & Fiilimsileri</span> Çöz
+            </h1>
+            <p class="text-sm text-slate-400 mt-1 max-w-2xl">
+              Gereksiz lise grameri yok. Kod yazarken, teknik doküman okurken, standup toplantısında ve iş mülakatında duyacağın gerçek kelimeler, sesli telaffuzlar ve fiilimsi (Gerund/Infinitive) kuralları.
+            </p>
+          </div>
+          <div class="flex items-center gap-3 bg-slate-900/90 border border-emerald-500/30 px-4 py-3 rounded-xl">
+            <div class="text-right">
+              <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">İngilizce Seviyen</div>
+              <div class="text-sm font-bold text-emerald-400" id="eng-rank">A1: Temel Başlangıç</div>
+            </div>
+            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+              <i data-lucide="award" class="w-5 h-5"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          
+          <div class="glass-card rounded-xl p-4 border border-white/5">
+            <div class="flex items-center justify-between text-slate-400 mb-2">
+              <span class="text-xs font-medium">Genel İlerleme</span>
+              <i data-lucide="percent" class="w-4 h-4 text-emerald-400"></i>
+            </div>
+            <div class="text-2xl font-bold font-mono text-emerald-300" id="eng-stat-percent">0%</div>
+            <div class="text-[11px] text-slate-400 mt-1">30 günlük hedef</div>
+          </div>
+
+          <div class="glass-card rounded-xl p-4 border border-white/5">
+            <div class="flex items-center justify-between text-slate-400 mb-2">
+              <span class="text-xs font-medium">Biten Günler</span>
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400"></i>
+            </div>
+            <div class="text-2xl font-bold font-mono text-cyan-300" id="eng-stat-days">0 / 30</div>
+            <div class="text-[11px] text-slate-400 mt-1" id="eng-stat-remaining">30 gün kaldı</div>
+          </div>
+
+          <div class="glass-card rounded-xl p-4 border border-white/5">
+            <div class="flex items-center justify-between text-slate-400 mb-2">
+              <span class="text-xs font-medium">Öğrenilen Kelime</span>
+              <i data-lucide="book-open" class="w-4 h-4 text-amber-400"></i>
+            </div>
+            <div class="text-2xl font-bold font-mono text-amber-300" id="eng-stat-words">0 / 300+</div>
+            <div class="text-[11px] text-slate-400 mt-1">Fiil, Phrasal, Gramer</div>
+          </div>
+
+          <div class="glass-card rounded-xl p-4 border border-white/5">
+            <div class="flex items-center justify-between text-slate-400 mb-2">
+              <span class="text-xs font-medium">İngilizce Serisi</span>
+              <i data-lucide="flame" class="w-4 h-4 text-rose-400"></i>
+            </div>
+            <div class="text-2xl font-bold font-mono text-rose-300" id="eng-stat-streak">0 Gün</div>
+            <div class="text-[11px] text-slate-400 mt-1">Her gün en az 15 dk</div>
+          </div>
+
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-1.5">
+          <div class="flex justify-between text-xs text-slate-400">
+            <span>30 Günlük İngilizce İlerleme Çubuğu</span>
+            <span id="eng-bar-text" class="font-mono text-emerald-400">0%</span>
+          </div>
+          <div class="w-full h-3 rounded-full bg-slate-900 border border-white/5 overflow-hidden">
+            <div id="eng-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 transition-all duration-500 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <div class="flex flex-wrap gap-2 border-b border-white/10 pb-3">
+      <button class="eng-tab-btn active px-4 py-2.5 rounded-xl font-semibold text-sm flex items-center gap-2 border border-transparent transition-all" data-tab="curriculum">
+        <i data-lucide="calendar" class="w-4 h-4"></i>
+        30 Günlük Müfredat & Kelimeler
+      </button>
+      <button class="eng-tab-btn px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center gap-2 border border-transparent transition-all" data-tab="gerunds">
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
+        Fiilimsiler (Gerund vs Infinitive) Rehberi
+      </button>
+      <button class="eng-tab-btn px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center gap-2 border border-transparent transition-all" data-tab="interview">
+        <i data-lucide="mic" class="w-4 h-4"></i>
+        Mülakat & Standup Konuşma Şablonları
+      </button>
+      <button class="eng-tab-btn px-4 py-2.5 rounded-xl font-semibold text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center gap-2 border border-transparent transition-all" data-tab="dictionary">
+        <i data-lucide="search" class="w-4 h-4"></i>
+        Tüm Kelimeler & Arama
+      </button>
+    </div>
+
+    <!-- TAB 1: CURRICULUM CONTENT -->
+    <div id="eng-tab-content-curriculum" class="space-y-6">
+      
+      <!-- Filters Toolbar -->
+      <div class="glass-panel rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        
+        <!-- Week Pills -->
+        <div class="flex flex-wrap items-center gap-1.5 w-full md:w-auto" id="eng-week-filters">
+          <button class="week-pill active px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition-all" data-week="all">
+            Tüm Haftalar (1-4)
+          </button>
+          <button class="week-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 border border-transparent transition-all" data-week="1">
+            1. Hafta (Fiiller & Fiilimsiler)
+          </button>
+          <button class="week-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 border border-transparent transition-all" data-week="2">
+            2. Hafta (Phrasal Verbs)
+          </button>
+          <button class="week-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 border border-transparent transition-all" data-week="3">
+            3. Hafta (Teknik İletişim & PR)
+          </button>
+          <button class="week-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 border border-transparent transition-all" data-week="4">
+            4. Hafta (Mülakat İngilizcesi)
+          </button>
+        </div>
+
+        <!-- Status Filter -->
+        <select id="eng-status-filter" class="bg-slate-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-emerald-500">
+          <option value="all">Tüm Günler</option>
+          <option value="uncompleted">Yapılacaklar</option>
+          <option value="completed">Tamamlananlar</option>
+        </select>
+
+      </div>
+
+      <!-- Days Container -->
+      <div id="eng-days-container" class="space-y-6">
+        <!-- Rendered by JS -->
+      </div>
+
+    </div>
+
+    <!-- TAB 2: GERUNDS & INFINITIVES GUIDE -->
+    <div id="eng-tab-content-gerunds" class="hidden space-y-6">
+      
+      <div class="glass-panel rounded-2xl p-6 lg:p-8 space-y-4 border border-cyan-500/20">
+        <div class="flex items-center gap-3">
+          <div class="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+            <i data-lucide="help-circle" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Fiilimsi Nedir? (Gerund vs Infinitive Mantığı)</h2>
+            <p class="text-sm text-slate-400">
+              Türkçedeki <strong>-mek, -mak</strong> ve <strong>-me, -ma</strong> eklerinin İngilizcedeki karşılığıdır. Bir fiili isim yapmak veya iki eylemi birbirine bağlamak için kullanılır.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div class="p-4 rounded-xl bg-slate-950/70 border border-cyan-500/20 space-y-2">
+            <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider block">1. GERUND (Fiil + ing)</span>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Fiil isme dönüşür. Cümlenin öznesi veya nesnesi olur:
+            </p>
+            <div class="p-2.5 rounded-lg bg-slate-900 text-xs font-mono text-cyan-300 border border-white/5">
+              <strong>Debugging</strong> is harder than <strong>writing</strong> code.<br>
+              <span class="text-slate-500">// Debug yapmak, kod yazmaktan iki kat daha zordur.</span>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-950/70 border border-emerald-500/20 space-y-2">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block">2. INFINITIVE (to + Fiil)</span>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Amaç belirtir ("yapmak için") veya karar/plan fiillerine bağlanır:
+            </p>
+            <div class="p-2.5 rounded-lg bg-slate-900 text-xs font-mono text-emerald-300 border border-white/5">
+              We decided <strong>to migrate</strong> to TypeScript.<br>
+              <span class="text-slate-500">// TypeScript'e geçmeye karar verdik.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gerunds & Infinitives Cheat Cards -->
+      <div id="gerunds-guide-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rendered by JS -->
+      </div>
+
+    </div>
+
+    <!-- TAB 3: INTERVIEW & STANDUP TEMPLATES -->
+    <div id="eng-tab-content-interview" class="hidden space-y-6">
+      <div class="glass-panel rounded-2xl p-6 border border-white/10 space-y-3">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="mic" class="w-5 h-5 text-emerald-400"></i>
+          Akıcı Konuşma ve Standup Şablonları
+        </h2>
+        <p class="text-sm text-slate-400">
+          Bu kalıpları hoparlör simgesine tıklayarak dinle, ardından durdurup aynı tonlama ve ritimle sesli olarak tekrar et.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="interview-templates-container">
+        <!-- Template 1: Daily Standup -->
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base text-emerald-400 flex items-center gap-2">
+              <i data-lucide="users" class="w-4 h-4"></i>
+              Günlük Standup / Scrum Şablonu
+            </h3>
+            <button class="speech-btn px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs flex items-center gap-1" data-speak="Yesterday, I finished implementing the user authentication endpoints and resolved the CORS issue. Today, I'm planning to write integration tests with Vitest and optimize the database queries. I don't have any blockers right now.">
+              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Dinle
+            </button>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-950 text-xs font-mono text-slate-200 border border-white/5 leading-relaxed space-y-2">
+            <p><span class="text-slate-500">// Dün ne yaptın:</span><br>
+            "Yesterday, I finished implementing the user authentication endpoints and resolved the CORS issue."</p>
+            <p><span class="text-slate-500">// Bugün ne yapacaksın:</span><br>
+            "Today, I'm planning to write integration tests with Vitest and optimize the database queries."</p>
+            <p><span class="text-slate-500">// Engel var mı:</span><br>
+            "I don't have any blockers right now."</p>
+          </div>
+        </div>
+
+        <!-- Template 2: Self-Introduction -->
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base text-cyan-400 flex items-center gap-2">
+              <i data-lucide="user-check" class="w-4 h-4"></i>
+              Mülakat: Kendini 60 Saniyede Tanıtma
+            </h3>
+            <button class="speech-btn px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 text-xs flex items-center gap-1" data-speak="Hi, thank you for having me today. I am a Fullstack developer primarily focused on TypeScript, React, Next.js, and Node.js with PostgreSQL. Over the past months, I have built production-grade fullstack web applications focusing heavily on clean architecture, resilient database schemas, and performance optimization. What excites me most about engineering is solving real problems with scalable, well-tested code.">
+              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Dinle
+            </button>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-950 text-xs font-mono text-slate-200 border border-white/5 leading-relaxed">
+            "Hi, thank you for having me today. I am a Fullstack developer primarily focused on TypeScript, React, Next.js, and Node.js with PostgreSQL. Over the past months, I have built production-grade fullstack web applications focusing heavily on clean architecture, resilient database schemas, and performance optimization. What excites me most about engineering is solving real problems with scalable, well-tested code."
+          </div>
+        </div>
+
+        <!-- Template 3: Describing a Hard Bug -->
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base text-amber-400 flex items-center gap-2">
+              <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+              Zorlu Bir Bug'ı Çözme Hikayesi (STAR)
+            </h3>
+            <button class="speech-btn px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs flex items-center gap-1" data-speak="We ran into a critical memory leak that caused our Node.js server to crash during peak traffic. My task was to isolate the root cause. I took heap snapshots in Chrome DevTools and identified uncleaned event listeners inside a WebSocket loop. After adding proper cleanup handlers, memory usage stabilized and crashes dropped to zero.">
+              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Dinle
+            </button>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-950 text-xs font-mono text-slate-200 border border-white/5 leading-relaxed">
+            "We ran into a critical memory leak that caused our Node.js server to crash during peak traffic. My task was to isolate the root cause. I took heap snapshots in Chrome DevTools and identified uncleaned event listeners inside a WebSocket loop. After adding proper cleanup handlers, memory usage stabilized and crashes dropped to zero."
+          </div>
+        </div>
+
+        <!-- Template 4: Asking the Interviewer -->
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base text-purple-400 flex items-center gap-2">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              Mülakatçıya Sorulacak 3 Akıllı Soru
+            </h3>
+            <button class="speech-btn px-2.5 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs flex items-center gap-1" data-speak="Could you tell me what the typical deployment workflow looks like in your team? How does the engineering department balance shipping new features with paying down technical debt? And what does success look like for someone in this role over the first ninety days?">
+              <i data-lucide="volume-2" class="w-3.5 h-3.5"></i> Dinle
+            </button>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-950 text-xs font-mono text-slate-200 border border-white/5 leading-relaxed space-y-1.5">
+            <p>1. "What does the typical deployment workflow look like in your team?"</p>
+            <p>2. "How does the engineering department balance shipping new features with paying down technical debt?"</p>
+            <p>3. "What does success look like for someone in this role over the first 90 days?"</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 4: SEARCHABLE DICTIONARY -->
+    <div id="eng-tab-content-dictionary" class="hidden space-y-6">
+      
+      <div class="glass-panel rounded-xl p-4 flex items-center gap-3">
+        <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
+        <input type="text" id="dict-search-input" placeholder="İngilizce kelime, Türkçe anlam veya tür ara (örn: deploy, roll back, Gerund)..." class="w-full bg-transparent text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none">
+      </div>
+
+      <div id="dictionary-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Rendered by JS -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="english-data.js"></script>
+  <script src="english-app.js"></script>
+</body>
+</html>
